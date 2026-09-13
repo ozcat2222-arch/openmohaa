@@ -56,6 +56,8 @@ public:
     void MoveNear(Vector vNear, float fRadius, float *vLeashHome = NULL, float fLeashRadius = 0.0f);
     void MoveTo(Vector vPos, float *vLeashHome = NULL, float fLeashRadius = 0.0f);
     bool MoveToBestAttractivePoint(int iMinPriority = 0);
+    void RecoverFromStuck();
+    void WanderNearby();
 
     bool CanMoveTo(Vector vPos);
     bool MoveDone();
@@ -102,6 +104,8 @@ private:
     int    m_iLastBlockTime;
     int    m_iTempAwayState;
     bool   m_bPathing;
+    Vector m_vLastFailedGoal;
+    int    m_iStuckUntilTime;
 
     ///
     /// Collision detection
