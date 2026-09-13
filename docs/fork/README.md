@@ -1,28 +1,8 @@
-# Fork bot work
+# Fork bot work (`experiment/bots`)
 
-Use branch `experiment/bots`.
-Do not use `experiment/bot-unstuck` — `playerbot_movement.cpp` there is damaged.
+Stock `playerbot_movement.cpp` is unchanged.
 
-This branch keeps stock `playerbot_movement.cpp`.
+Unstuck is wired from `BotController::UpdateBotStates` via `movement.TickUnstuck()` after `MoveThink`.
+Idle bots call `WanderNearby()` instead of a 2k-unit AvoidPath dart.
 
-Added:
-- `code/fgame/playerbot_unstuck.cpp`
-- extra methods on `BotMovement` in `playerbot.h`
-
-When you clone, wire unstuck with this edit in `MoveThink`:
-
-```
-if (m_iNumBlocks >= 3) {
-    RecoverFromStuck();
-    return;
-}
-```
-
-in place of `m_iNumBlocks >= 5` / `ClearMove()`.
-
-Also init in the BotMovement constructor:
-
-```
-m_iStuckUntilTime = 0;
-m_vLastFailedGoal = vec_zero;
-```
+Do not use branch `experiment/bot-unstuck`.

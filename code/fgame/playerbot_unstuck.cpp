@@ -10,6 +10,32 @@ Fork-only helpers for bot unstuck / wander. Not for upstream PR.
 
 #include "playerbot.h"
 
+void BotMovement::TickUnstuck()
+{
+    if (!controlledEntity) {
+        return;
+    }
+
+    if (m_iNumBlocks >= 3) {
+        RecoverFromStuck();
+        return;
+    }
+
+    if (!IsMoving() || controlledEntity->GetLadder()) {
+        return;
+    }
+
+    if (controlledEntity->GetMoveResult() >= MOVERESULT_BLOCKED
+        || controlledEntity->velocity.lengthSquared() <= Square(8)) {
+        if (m_iNumBlocks < 3) {
+            m_iNumBlocks++;
+        }
+        if (m_iNumBlocks >= 3) {
+            RecoverFromStuck();
+        }
+    }
+}
+
 void BotMovement::WanderNearby()
 {
     Vector dir;
