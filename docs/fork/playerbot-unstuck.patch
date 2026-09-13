@@ -1,0 +1,26 @@
+--- a/code/fgame/playerbot.cpp
++++ b/code/fgame/playerbot.cpp
+@@ -173,6 +173,7 @@ void BotController::UpdateBotStates(void)
+     CheckStates();
+ 
+     movement.MoveThink(m_botCmd);
++    movement.TickUnstuck();
+     rotation.TurnThink(m_botCmd, m_botEyes);
+     CheckUse();
+ 
+@@ -612,11 +613,7 @@ void BotController::State_Idle(void)
+             if (movement.MoveDone()) {
+                 m_vLastDeathPos = vec_zero;
+             }
+         } else {
+-            Vector randomDir(G_CRandom(16), G_CRandom(16), G_CRandom(16));
+-            Vector preferredDir;
+-            float  radius = 512 + G_Random(2048);
+-
+-            preferredDir += Vector(controlledEnt->orientation[0]) * (rand() % 5 ? 1024 : -1024);
+-            preferredDir += Vector(controlledEnt->orientation[2]) * (rand() % 5 ? 1024 : -1024);
+-            movement.AvoidPath(controlledEnt->origin + randomDir, radius, preferredDir);
++            movement.WanderNearby();
+         }
+     }
+ }
