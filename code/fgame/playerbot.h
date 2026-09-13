@@ -45,6 +45,7 @@ public:
     void SetControlledEntity(Player *newEntity);
 
     void MoveThink(usercmd_t& botcmd);
+    void TickUnstuck();
 
     void AvoidPath(
         Vector vPos,
@@ -107,17 +108,9 @@ private:
     Vector m_vLastFailedGoal;
     int    m_iStuckUntilTime;
 
-    ///
-    /// Collision detection
-    ///
-
     bool   m_bAvoidCollision;
     int    m_iCollisionCheckTime;
     Vector m_vTempCollisionAvoidance;
-
-    ///
-    /// Jump detection
-    ///
 
     bool   m_bJump;
     int    m_iJumpCheckTime;
@@ -170,7 +163,6 @@ private:
     BotMovement movement;
     BotRotation rotation;
 
-    // States
     int    m_iCuriousTime;
     int    m_iAttackTime;
     int    m_iAttackStopAimTime;
@@ -189,16 +181,13 @@ private:
     SafePtr<Sentient> m_pEnemy;
     int               m_iEnemyEyesTag;
 
-    // Input
     usercmd_t  m_botCmd;
     usereyes_t m_botEyes;
 
-    // States
     int               m_StateCount;
     unsigned int      m_StateFlags;
     ScriptThreadLabel m_RunLabel;
 
-    // Taunts
     int m_iNextTauntTime;
     int m_iLastFireTime;
 
